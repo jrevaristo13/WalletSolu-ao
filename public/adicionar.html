@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Item</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 500px; margin: auto; }
+        input { width: 100%; padding: 10px; margin: 10px 0; }
+        button { width: 100%; padding: 10px; background-color: green; color: white; border: none; cursor: pointer; font-size: 16px;}
+        button:hover { background-color: darkgreen; }
+    </style>
+</head>
+<body>
+    <a href="index.html">⬅ Voltar para Home</a>
+    <h2>Cadastrar Novo Produto</h2>
+    
+    <input type="text" id="nome" placeholder="Nome do Produto (ex: Caneta)">
+    <input type="number" id="qtd" placeholder="Quantidade">
+    <button onclick="salvarItem()">Salvar no Estoque</button>
+
+    <script>
+        async function salvarItem() {
+            const nome = document.getElementById('nome').value;
+            const qtd = document.getElementById('qtd').value;
+
+            if(!nome || !qtd) { alert("Preencha tudo!"); return; }
+
+            const dados = { nome: nome, quantidade: qtd };
+
+            // Envia para a API (Método POST)
+            await fetch('/api/itens', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            alert("Item salvo com sucesso!");
+            window.location.href = "lista.html"; // Redireciona para a lista
+        }
+    </script>
+</body>
+</html>

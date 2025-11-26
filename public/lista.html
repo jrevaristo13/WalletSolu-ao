@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Estoque</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .voltar { display: block; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="voltar">⬅ Voltar para Home</a>
+    <h2>Itens em Estoque</h2>
+    
+    <table id="tabela-estoque">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome do Produto</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            </tbody>
+    </table>
+
+    <script>
+        // Função para buscar dados da API
+        async function carregarEstoque() {
+            const response = await fetch('/api/itens');
+            const itens = await response.json();
+            
+            const tabela = document.querySelector('#tabela-estoque tbody');
+            tabela.innerHTML = ''; // Limpa antes de preencher
+
+            itens.forEach(item => {
+                const linha = `<tr>
+                    <td>${item.id}</td>
+                    <td>${item.nome}</td>
+                    <td>${item.quantidade}</td>
+                </tr>`;
+                tabela.innerHTML += linha;
+            });
+        }
+
+        // Carrega assim que a página abre
+        carregarEstoque();
+    </script>
+</body>
+</html>
